@@ -12,20 +12,29 @@ from services.transform import normalise_service, normalise_snapshot
 
 from datetime import datetime
 
+import logging
+logging.basicConfig(level=logging.INFO)
+
 
 def run_scraper():
     app = create_app()
     client = TransportAPI()
 
+    logging.info("Scraper starting…")
+
     with app.app_context():
 
         stations = Station.query.all()
+
+        logging.info(f"Loaded {len(stations)} stations")
 
         total_services = 0
         successful = 0
         failed = 0
 
         for station in stations:
+            logging.info(f"Scraping station: {station.code}")
+
             try:
                 data = client.get_departures(station.code)
                 departures = data.get("departures", {}).get("all", [])
@@ -61,6 +70,8 @@ def run_scraper():
                 failed += 1
                 print("ERROR:", station.code, str(e))
 
+        logging.info("pre scrapelog")
+
         # scrape log
         log = ScrapeLog(
             timestamp=datetime.utcnow(),
@@ -70,5 +81,7 @@ def run_scraper():
         )
         db.session.add(log)
         db.session.commit()
+
+        logging.info(f"Scrape finished. Total: {total_services}, OK: {successful}, Failed: {failed}")
 
         print("SCRAPE COMPLETE:", total_services, "services")
