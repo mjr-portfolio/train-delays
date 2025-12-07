@@ -1,3 +1,8 @@
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+# ^ Adding to allow cron jobs to work on Railway ^
+
 from app import create_app
 from db import db
 from db.models import Station, Service, ServiceSnapshot, ScrapeLog
