@@ -6,13 +6,15 @@ from config import get_config
 from db import init_app as init_db
 from db import models  # noqa: F401  # ensure models are registered
 from routes import health_bp, stations_bp, services_bp
-
+from flask_cors import CORS
 
 def create_app():
     load_dotenv()
     app = Flask(__name__)
     app_config = get_config()
     app.config.from_object(app_config)
+
+    CORS(app)
 
     print("DEBUG DB URI:", app.config.get("SQLALCHEMY_DATABASE_URI"))
 
