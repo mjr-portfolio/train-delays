@@ -85,3 +85,6 @@ def run_scraper():
         logging.info(f"Scrape finished. Total: {total_services}, OK: {successful}, Failed: {failed}")
 
         print("SCRAPE COMPLETE:", total_services, "services")
+
+if __name__ == "__main__":
+    run_scraper()
