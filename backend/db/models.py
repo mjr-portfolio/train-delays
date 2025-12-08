@@ -69,5 +69,6 @@ class ScrapeLog(TimestampMixin, db.Model):
     total_services = db.Column(db.Integer)
     successful = db.Column(db.Integer)
     failed = db.Column(db.Integer)
+    avg_delay = db.Column(db.Float)
     notes = db.Column(db.String(255))
 
