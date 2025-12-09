@@ -10,7 +10,7 @@ from db.models import Station, Service, ServiceSnapshot, ScrapeLog
 from services.transport_api import TransportAPI
 from services.transform import normalise_service, normalise_snapshot
 
-from datetime import datetime
+from datetime import datetime, timezone
 
 import logging
 logging.basicConfig(level=logging.INFO)
@@ -72,12 +72,25 @@ def run_scraper():
 
         logging.info("pre scrapelog")
 
+        # calculate avg delay from this scrape
+        avg_delay = 0
+
+        snapshots = ServiceSnapshot.query.filter(
+            ServiceSnapshot.timestamp >= datetime.now(timezone.utc).replace(second=0, microsecond=0)
+        ).all()
+
+        if snapshots:
+            delays = [s.delay_minutes for s in snapshots if s.delay_minutes is not None]
+            if delays:
+                avg_delay = sum(delays) / len(delays)
+
         # scrape log
         log = ScrapeLog(
-            timestamp=datetime.utcnow(),
+            timestamp=datetime.now(timezone.utc),
             total_services=total_services,
             successful=successful,
             failed=failed,
+            avg_delay=avg_delay,
         )
         db.session.add(log)
         db.session.commit()

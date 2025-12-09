@@ -1,13 +1,13 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from . import db
 
 
 class TimestampMixin:
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
     updated_at = db.Column(
         db.DateTime,
-        default=datetime.utcnow,
-        onupdate=datetime.utcnow,
+        default=datetime.now(timezone.utc),
+        onupdate=datetime.now(timezone.utc),
     )
 
 
@@ -54,7 +54,7 @@ class ServiceSnapshot(TimestampMixin, db.Model):
         nullable=False,
     )
 
-    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+    timestamp = db.Column(db.DateTime, default=datetime.now(timezone.utc))
     expected_time = db.Column(db.String(10))
     delay_minutes = db.Column(db.Integer)
     platform = db.Column(db.String(10))
@@ -65,7 +65,7 @@ class ScrapeLog(TimestampMixin, db.Model):
     __tablename__ = "scrape_logs"
 
     id = db.Column(db.Integer, primary_key=True)
-    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+    timestamp = db.Column(db.DateTime, default=datetime.now(timezone.utc))
     total_services = db.Column(db.Integer)
     successful = db.Column(db.Integer)
     failed = db.Column(db.Integer)
