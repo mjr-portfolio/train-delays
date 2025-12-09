@@ -1,7 +1,7 @@
 from flask import jsonify, request
 from . import services_bp
 
-from db.models import Service, ServiceSnapshot, Station
+from db.models import Service, ServiceSnapshot, Station, ScrapeLog
 
 
 @services_bp.get("/api/services")
@@ -89,3 +89,21 @@ def get_service_history(id):
             for s in snapshots
         ]
     })
+
+
+@services_bp.get("/api/delay-trend")
+def delay_trend():
+    logs = (
+        ScrapeLog.query
+        .order_by(ScrapeLog.timestamp.asc())
+        .limit(50)
+        .all()
+    )
+
+    return jsonify([
+        {
+            "timestamp": log.timestamp,
+            "avg_delay": log.avg_delay
+        }
+        for log in logs
+    ])
