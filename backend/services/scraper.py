@@ -70,7 +70,7 @@ def run_scraper():
                 failed += 1
                 print("ERROR:", station.code, str(e))
 
-        logging.info("pre scrapelog")
+        logging.info("pre snapshots")
 
         # calculate avg delay from this scrape
         avg_delay = 0
@@ -83,6 +83,8 @@ def run_scraper():
             delays = [s.delay_minutes for s in snapshots if s.delay_minutes is not None]
             if delays:
                 avg_delay = sum(delays) / len(delays)
+
+        logging.info("pre scrapelog")
 
         # scrape log
         log = ScrapeLog(
