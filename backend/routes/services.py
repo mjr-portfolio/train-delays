@@ -107,3 +107,11 @@ def delay_trend():
         }
         for log in logs
     ])
+
+
+@services_bp.get("/api/last-scrape")
+def last_scrape():
+    last = ScrapeLog.query.order_by(ScrapeLog.timestamp.desc()).first()
+    if not last:
+        return jsonify({"last": None})
+    return jsonify({"last": last.timestamp})
