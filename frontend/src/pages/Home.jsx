@@ -1,8 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { api } from "../api/client";
-import { Link } from "react-router-dom";
-import { Line } from "react-chartjs-2";
-import { Chart as ChartJS } from "chart.js/auto";
+
+import CountdownCard from "../components/CountdownCard";
+import TrendChart from "../components/TrendChart";
+import RecentDelays from "../components/RecentDelays";
+import StationSelect from "../components/StationSelect";
+import ServicesTable from "../components/ServicesTable";
 
 export default function Home() {
   const [stations, setStations] = useState([]);
@@ -32,17 +35,21 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    if (!selected) return;
+    api.get("/api/services?station=" + selected).then((res) => {
+      setServices(res.data);
+    });
+  }, [selected]);
+
+  const fetchLastScrape = useCallback(() => {
     api.get("/api/last-scrape").then((res) => {
       setLast(res.data.last);
     });
   }, []);
 
   useEffect(() => {
-    if (!selected) return;
-    api.get("/api/services?station=" + selected).then((res) => {
-      setServices(res.data);
-    });
-  }, [selected]);
+    fetchLastScrape();
+  }, [fetchLastScrape]);
 
   const nextScrape = last
     ? new Date(last).getTime() + 4 * 60 * 60 * 1000 // 4h in ms
@@ -56,7 +63,9 @@ export default function Home() {
       const diff = nextScrape - now;
 
       if (diff <= 0) {
-        setCountdown("Refreshing soon…");
+        setCountdown("Refreshing soon, please wait…");
+        // Grab the latest last-scrape from the API to rerun useEffect
+        fetchLastScrape();
         return;
       }
 
@@ -68,106 +77,43 @@ export default function Home() {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [nextScrape]);
+  }, [nextScrape, fetchLastScrape]);
 
   return (
-    <div
-      style={{
-        maxWidth: "900px",
-        margin: "0 auto",
-        textAlign: "center",
-        padding: "1rem",
-      }}
-    >
-      <h1>🚆 UK Train Delays Dashboard 🚆</h1>
-
-      {countdown && (
-        <div style={{ marginBottom: "1rem", fontWeight: "bold" }}>
-          <div>
-            Approx Next Scrape: {new Date(nextScrape).toLocaleTimeString()}
-          </div>
-          <div>Countdown: {countdown}</div>
-        </div>
-      )}
-
-      <div
-        style={{
-          display: "flex",
-          gap: "2rem",
-          alignItems: "flex-start",
-          justifyContent: "center",
-          flexWrap: "wrap",
-        }}
-      >
-        {trend.length > 0 && (
-          <div
-            style={{
-              minWidth: "400px",
-              maxWidth: "600px",
-              margin: "2rem auto",
-            }}
-          >
-            <h2>Average Delay Trend</h2>
-            <Line
-              data={{
-                labels: trend.map((t) =>
-                  new Date(t.timestamp).toLocaleTimeString()
-                ),
-                datasets: [
-                  {
-                    label: "Avg Delay (mins)",
-                    data: trend.map((t) => t.avg_delay),
-                    tension: 0.3,
-                  },
-                ],
-              }}
-            />
-          </div>
-        )}
-
-        <div style={{ maxWidth: "500px", margin: "2rem auto" }}>
-          <h2>Recent delays</h2>
-
-          <ul>
-            {delays.map((d) => (
-              <li style={{ listStyleType: "none" }} key={d.station}>
-                {d.station}: {d.avg_delay.toFixed(1)} min
-              </li>
-            ))}
-          </ul>
-        </div>
+    <>
+      <div style={{ marginBottom: "1.5rem", textAlign: "center" }}>
+        <h1>🚆 UK Train Delays Dashboard 🚆</h1>
       </div>
 
-      <select onChange={(e) => setSelected(e.target.value)}>
-        <option>Select station...</option>
-        {stations.map((s) => (
-          <option key={s.id} value={s.code}>
-            {s.name}
-          </option>
-        ))}
-      </select>
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <CountdownCard countdown={countdown} nextScrape={nextScrape} />
+      </div>
 
-      <table>
-        <thead>
-          <tr>
-            <th>Operator</th>
-            <th>Destination</th>
-            <th>Scheduled</th>
-          </tr>
-        </thead>
+      <div
+        className="dashboard-grid"
+        style={{
+          display: "grid",
+          gridTemplateColumns: "3fr 2fr",
+          gap: "2rem",
+          marginTop: "1rem",
+          marginBottom: "2rem",
+        }}
+      >
+        <TrendChart trend={trend} />
+        <RecentDelays delays={delays} />
+      </div>
 
-        <tbody>
-          {services.map((s) => (
-            <tr key={s.id}>
-              <td>{s.operator}</td>
-              <td>
-                <Link to={`/service/${s.id}`}>{s.destination}</Link>
-              </td>
-              <td>{s.scheduled_time}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+      <div style={{ marginBottom: "1.5rem", textAlign: "center" }}>
+        <StationSelect
+          stations={stations}
+          selected={selected}
+          setSelected={setSelected}
+        />
+      </div>
+
+      <div style={{ marginTop: "1rem" }}>
+        <ServicesTable services={services} />
+      </div>
+    </>
   );
 }

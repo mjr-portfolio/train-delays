@@ -35,19 +35,48 @@ table {
   margin-top: 2rem;
   border-collapse: collapse;
   width: 100%;
+  table-layout: fixed;
 }
 
 th,
 td {
-  padding: 8px;
-  border-bottom: 1px solid #ddd;
+  padding: 0.6rem 0.75rem;
+  text-align: center;
+  border-bottom: 1px solid #333;
+}
+
+thead th {
+  border-bottom: 1px solid #444;
+  font-weight: 600;
 }
 
 tr:hover {
-  background: #525252;
+  background: rgba(255, 255, 255, 0.04);
 }
 
 h1,
 h2 {
   font-weight: 500;
+}
+
+@media (max-width: 500px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #2a2a2a 0%, #3a3a3a 50%, #2a2a2a 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 6px;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
 }
