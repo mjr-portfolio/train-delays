@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { api } from "../api/client";
+import { Link } from "react-router-dom";
 
 export default function ServiceDetail() {
   const { id } = useParams();
@@ -22,26 +23,36 @@ export default function ServiceDetail() {
   return (
     <>
       <div>
+        <button>
+          <Link to={"/"}>Back</Link>
+        </button>
         <h2>
-          {service.origin} → {service.destination}
+          {service.origin || "-"} → {service.destination || "-"}
         </h2>
-        <p>{service.operator}</p>
-        <p>Scheduled: {service.scheduled_time}</p>
+        <p>{service.operator || "-"}</p>
+        <p>Scheduled: {service.scheduled_time || "-"}</p>
         <h3>Latest</h3>
-        <p>Platform: {service.latest.platform}</p>
-        <p>Status: {service.latest.status}</p>
-        <p>Expected: {service.latest.expected_time}</p>
+        <p>Platform: {service.latest.platform || "-"}</p>
+        <p>Status: {service.latest.status || "-"}</p>
+        <p>Expected: {service.latest.expected_time || "-"}</p>
       </div>
       <div>
         <h3>History</h3>
         <table>
+          <thead>
+            <tr>
+              <th>Timestamp</th>
+              <th>Expected Time</th>
+              <th>Delay (Mins)</th>
+            </tr>
+          </thead>
           <tbody>
             {/* below we currently set timestamp as key if available, if not we set the index - can update backend later to give an actual id as default */}
             {history.map((h, i) => (
               <tr key={h.timestamp ?? i}>
-                <td>{h.timestamp}</td>
-                <td>{h.expected_time}</td>
-                <td>{h.delay_minutes}</td>
+                <td>{h.timestamp || "-"}</td>
+                <td>{h.expected_time || "-"}</td>
+                <td>{h.delay_minutes || "-"}</td>
               </tr>
             ))}
           </tbody>
