@@ -20,7 +20,7 @@ def list_services():
                 .filter_by(station_id=station.id)
             )
 
-    services = query.order_by(Service.id.desc()).limit(50).all()
+    services = query.order_by(Service.scheduled_time.asc()).limit(50).all()
 
     return jsonify([
         {
@@ -70,7 +70,7 @@ def get_service_history(id):
     snapshots = (
         ServiceSnapshot.query
         .filter_by(service_id=id)
-        .order_by(ServiceSnapshot.id.asc())   # oldest first for charts
+        .order_by(ServiceSnapshot.timestamp.desc())
         .all()
     )
 
