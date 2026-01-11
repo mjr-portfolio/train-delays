@@ -19,7 +19,7 @@ a {
   text-decoration: inherit;
 }
 a:hover {
-  color: #535bf2;
+  color: #fff;
 }
 
 body {
@@ -79,4 +79,16 @@ h2 {
   100% {
     background-position: -200% 0;
   }
+}
+
+.backButton {
+  padding: 0.5rem 1.5rem;
+  color: #fff;
+  background-color: #333;
+  border: 1px solid #fff;
+  border-radius: 4px;
+}
+
+.backButton:hover {
+  background-color: #444;
 }

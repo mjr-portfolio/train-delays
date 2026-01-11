@@ -6,6 +6,7 @@ from db.models import Service, ServiceSnapshot, Station, ScrapeLog
 
 @services_bp.get("/api/services")
 def list_services():
+    """List services for a station, ordered by scheduled time."""
 
     station_code = request.args.get("station")
 
@@ -37,6 +38,8 @@ def list_services():
 
 @services_bp.get("/api/services/<int:id>")
 def get_service_detail(id):
+    """Return service info + latest snapshot."""
+
     service = Service.query.get_or_404(id)
 
     # find the most recent snapshot for display
@@ -65,6 +68,8 @@ def get_service_detail(id):
 
 @services_bp.get("/api/services/<int:id>/history")
 def get_service_history(id):
+    """Return all snapshots for a service (oldest first)."""
+
     service = Service.query.get_or_404(id)
 
     snapshots = (
@@ -93,6 +98,8 @@ def get_service_history(id):
 
 @services_bp.get("/api/delay-trend")
 def delay_trend():
+    """Return recent scrape log avg delays for charting."""
+
     logs = (
         ScrapeLog.query
         .order_by(ScrapeLog.timestamp.asc())
@@ -111,6 +118,8 @@ def delay_trend():
 
 @services_bp.get("/api/last-scrape")
 def last_scrape():
+    """Return timestamp of the most recent scrape."""
+    
     last = ScrapeLog.query.order_by(ScrapeLog.timestamp.desc()).first()
     if not last:
         return jsonify({"last": None})

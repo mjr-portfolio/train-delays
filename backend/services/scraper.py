@@ -11,10 +11,26 @@ from db.models import Station, Service, ServiceSnapshot, ScrapeLog
 from services.transport_api import TransportAPI
 from services.transform import normalise_service, normalise_snapshot
 
+import time
+from sqlalchemy.exc import OperationalError
+
 from datetime import datetime, timezone
 
 import logging
 logging.basicConfig(level=logging.INFO)
+
+
+def load_stations_with_retry(retries=5, delay=3):
+    for attempt in range(retries):
+        try:
+            return Station.query.all()
+        except OperationalError as e:
+            if attempt == retries - 1:
+                raise
+            logging.warning(
+                f"DB unavailable (attempt {attempt+1}/{retries}), retrying in {delay}s..."
+            )
+            time.sleep(delay)
 
 
 def run_scraper():
@@ -36,7 +52,7 @@ def run_scraper():
     # Flask requires an application context for DB operations
     with app.app_context():
 
-        stations = Station.query.all()
+        stations = load_stations_with_retry()
 
         logging.info(f"Loaded {len(stations)} stations")
 

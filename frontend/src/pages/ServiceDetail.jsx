@@ -23,9 +23,9 @@ export default function ServiceDetail() {
   return (
     <>
       <div>
-        <button>
-          <Link to={"/"}>Back</Link>
-        </button>
+        <Link className="backButton" to={"/"}>
+          Back
+        </Link>
         <h2>
           {service.origin || "-"} → {service.destination || "-"}
         </h2>
@@ -47,7 +47,7 @@ export default function ServiceDetail() {
             </tr>
           </thead>
           <tbody>
-            {/* below we currently set timestamp as key if available, if not we set the index - can update backend later to give an actual id as default */}
+            {/* below it currently set timestamp as key if available, if not it set the index - can update backend later to give an actual id as default */}
             {history.map((h, i) => (
               <tr key={h.timestamp ?? i}>
                 <td>{h.timestamp || "-"}</td>

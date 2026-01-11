@@ -1,4 +1,7 @@
 from flask import Flask
+
+# Load environment variables early so the database URI and API keys
+# are available before extensions (SQLAlchemy, CORS) initialise.
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -8,20 +11,23 @@ from db import models  # noqa: F401  # ensure models are registered
 from routes import health_bp, stations_bp, services_bp
 from flask_cors import CORS
 
+# App factory for the backend API.
+# Using a factory makes it easier for workers, tests, and CLI commands
+# to import the app cleanly.
+
 def create_app():
-    load_dotenv()
+    """Create and configure the Flask application."""
+    
     app = Flask(__name__)
     app_config = get_config()
     app.config.from_object(app_config)
 
     CORS(app)
 
-    print("DEBUG DB URI:", app.config.get("SQLALCHEMY_DATABASE_URI"))
-
-    # Initialise DB + migrations
+    # Initialise DB + models
     init_db(app)
 
-    # Register blueprints
+    # Register API blueprints
     app.register_blueprint(health_bp)
     app.register_blueprint(stations_bp)
     app.register_blueprint(services_bp)

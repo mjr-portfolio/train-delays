@@ -8,6 +8,8 @@ from sqlalchemy import func
 
 @stations_bp.get("/api/stations")
 def list_stations():
+    """Return all stations tracked by the system."""
+
     stations = Station.query.order_by(Station.name).all()
 
     return jsonify([
@@ -20,25 +22,9 @@ def list_stations():
     ])
 
 
-@stations_bp.get("/api/stations/<code>/avg-delay")
-def average_delay_for_station(code):
-    station = Station.query.filter_by(code=code).first_or_404()
-
-    result = (
-        db.session.query(func.avg(ServiceSnapshot.delay_minutes))
-        .filter(ServiceSnapshot.station_id == station.id)
-        .filter(ServiceSnapshot.delay_minutes.isnot(None))
-        .scalar()
-    )
-
-    return jsonify({
-        "station": station.code,
-        "average_delay": float(result) if result is not None else None,
-    })
-
-
 @stations_bp.get("/api/stations/delays/recent")
 def recent_delays_by_station():
+    """Return average delay per station based on the most recent snapshot records."""
 
     # limit to recent snapshots (last 100 for now)
     subquery = (

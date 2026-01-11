@@ -1,11 +1,14 @@
 import os
 import requests
 from datetime import datetime
-from dotenv import load_dotenv; load_dotenv()
+from dotenv import load_dotenv
+load_dotenv() # Ensure API credentials are available
 
 
 BASE_URL = "https://transportapi.com/v3/uk/train/station"
 
+# Thin wrapper around TransportAPI.
+# Handles authentication + fetching live departures for a station.
 
 class TransportAPI:
     def __init__(self):
@@ -28,7 +31,7 @@ class TransportAPI:
         print("FETCH URL:", url)
 
         response = requests.get(url, params=params)
-        response.raise_for_status()   # good practice - fail loudly on 4xx/5xx
+        response.raise_for_status() # good practice - fail loudly on 4xx/5xx
 
         data = response.json()
         return data

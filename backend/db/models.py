@@ -1,6 +1,8 @@
 from datetime import datetime, timezone
 from . import db
 
+# Database models for services, snapshots, stations, and scrape logs.
+# These represent the core domain objects used by the scraper + API.
 
 class TimestampMixin:
     created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
@@ -12,6 +14,8 @@ class TimestampMixin:
 
 
 class Station(TimestampMixin, db.Model):
+    """A train station we monitor."""
+
     __tablename__ = "stations"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -23,6 +27,8 @@ class Station(TimestampMixin, db.Model):
 
 
 class Service(TimestampMixin, db.Model):
+    """A unique train service (train UID + scheduled time)."""
+
     __tablename__ = "services"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -38,6 +44,8 @@ class Service(TimestampMixin, db.Model):
 
 
 class ServiceSnapshot(TimestampMixin, db.Model):
+    """State of a service at the moment of scraping."""
+
     __tablename__ = "service_snapshots"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -62,6 +70,8 @@ class ServiceSnapshot(TimestampMixin, db.Model):
 
 
 class ScrapeLog(TimestampMixin, db.Model):
+    """Summary of a scraping run (used for trend charts)."""
+    
     __tablename__ = "scrape_logs"
 
     id = db.Column(db.Integer, primary_key=True)
