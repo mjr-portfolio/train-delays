@@ -1,9 +1,7 @@
 import "./App.css";
 
-import Home from "./pages/Home";
-
-function App() {
-  return <Home />;
+function App({ children }) {
+  return <div className="container">{children}</div>;
 }
 
 export default App;

@@ -81,29 +81,20 @@ export default function Home() {
 
   return (
     <>
-      <div style={{ marginBottom: "1.5rem", textAlign: "center" }}>
+      <div className="homepageCenterMargin">
         <h1>🚆 UK Train Delays Dashboard 🚆</h1>
       </div>
 
-      <div style={{ display: "flex", justifyContent: "center" }}>
+      <div className="homepageCountdown">
         <CountdownCard countdown={countdown} nextScrape={nextScrape} />
       </div>
 
-      <div
-        className="dashboard-grid"
-        style={{
-          display: "grid",
-          gridTemplateColumns: "3fr 2fr",
-          gap: "2rem",
-          marginTop: "1rem",
-          marginBottom: "2rem",
-        }}
-      >
+      <div className="homepageGrid">
         <TrendChart trend={trend} />
         <RecentDelays delays={delays} />
       </div>
 
-      <div style={{ marginBottom: "1.5rem", textAlign: "center" }}>
+      <div className="homepageCenterMargin">
         <StationSelect
           stations={stations}
           selected={selected}
@@ -111,7 +102,7 @@ export default function Home() {
         />
       </div>
 
-      <div style={{ marginTop: "1rem" }}>
+      <div className="homepageCenterMargin">
         <ServicesTable services={services} />
       </div>
     </>

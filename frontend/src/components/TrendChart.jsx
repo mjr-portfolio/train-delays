@@ -7,9 +7,9 @@ export default function TrendChart({ trend }) {
     <Card>
       {trend.length > 0 ? (
         <div>
-          <h2 style={{ textAlign: "center" }}>Average Delay Trend</h2>
+          <h2 className="centerTitle">Average Delay Trend</h2>
 
-          <div style={{ marginBottom: "1rem" }}>
+          <div className="trendBottomMargin">
             <Line
               data={{
                 labels: trend.map((t) =>
@@ -27,7 +27,7 @@ export default function TrendChart({ trend }) {
           </div>
         </div>
       ) : (
-        <div className="skeleton" style={{ height: 280, width: "100%" }} />
+        <div className="skeleton trendSkeleton" />
       )}
     </Card>
   );

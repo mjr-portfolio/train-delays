@@ -2,7 +2,7 @@ export default function StationSelect({ stations, selected, setSelected }) {
   return (
     <>
       <select
-        style={{ padding: "0.4rem 0.7rem", fontSize: "1.1rem" }}
+        className="stationSelect"
         value={selected}
         onChange={(e) => setSelected(e.target.value)}
       >

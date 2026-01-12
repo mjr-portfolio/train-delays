@@ -59,26 +59,28 @@ h2 {
   font-weight: 500;
 }
 
-@media (max-width: 500px) {
-  .dashboard-grid {
+.homepageGrid {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 2rem;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 650px) {
+  .homepageGrid {
     grid-template-columns: 1fr !important;
   }
 }
 
-.skeleton {
-  background: linear-gradient(90deg, #2a2a2a 0%, #3a3a3a 50%, #2a2a2a 100%);
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
-  border-radius: 6px;
+.homepageCenterMargin {
+  margin-bottom: 1.5rem;
+  text-align: center;
 }
 
-@keyframes shimmer {
-  0% {
-    background-position: 200% 0;
-  }
-  100% {
-    background-position: -200% 0;
-  }
+.homepageCountdown {
+  display: flex;
+  justify-content: center;
 }
 
 .backButton {
@@ -91,4 +93,82 @@ h2 {
 
 .backButton:hover {
   background-color: #444;
+}
+
+/* Components */
+
+.card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.cardCentered {
+  text-align: center;
+  width: 400px;
+}
+
+.countdownWrapper {
+  font-size: 1.1rem;
+  margin-bottom: 0.3rem;
+}
+
+.countdownBoldText {
+  font-weight: 600;
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #2a2a2a 0%, #3a3a3a 50%, #2a2a2a 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 6px;
+}
+
+.countdownSkeleton {
+  height: 58px;
+  width: 70%;
+  margin: 0 auto;
+}
+
+.recentSkeleton {
+  height: 280px;
+  width: 100%;
+}
+
+.trendSkeleton {
+  height: 280px;
+  width: 100%;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.centerTitle {
+  text-align: center;
+}
+
+.recentList {
+  list-style: none;
+  padding: 0.4rem 0;
+  font-size: 1.1rem;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #444;
+}
+
+.stationSelect {
+  padding: 0.4rem 0.7rem;
+  font-size: 1.1rem;
+}
+
+.trendBottomMargin {
+  margin-bottom: 1rem;
 }

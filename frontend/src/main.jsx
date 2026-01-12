@@ -1,7 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
+import App from "./App";
 import Home from "./pages/Home";
 import ServiceDetail from "./pages/ServiceDetail";
 
@@ -14,14 +15,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <div
-      style={{
-        maxWidth: "1200px",
-        margin: "0 auto",
-        padding: "1rem",
-      }}
-    >
+    <App>
       <RouterProvider router={router} />
-    </div>
+    </App>
   </React.StrictMode>
 );
