@@ -1,10 +1,16 @@
-🚆 Train Delays Dashboard
+<h1>🚆 Train Delays Dashboard</h1>
+
+![React](https://img.shields.io/badge/Frontend-React-blue)
+![Flask](https://img.shields.io/badge/Backend-Flask-green)
+![PostgreSQL](https://img.shields.io/badge/Database-PostgreSQL-blueviolet)
+![Vercel](https://img.shields.io/badge/Deploy-Vercel-black)
+![Railway](https://img.shields.io/badge/Deploy-Railway-orange)
 
 A full-stack data project that tracks UK train delays over time by scraping live departure data, normalising it into a relational database, and visualising trends in a simple dashboard.
 
 This project was built to demonstrate real-world backend and data engineering skills: working with external APIs, building reliable pipelines, designing schemas, and deploying production services.
 
-📊 What the project does
+<h2>📊 What the project does</h2>
 
     Scrapes live train departure data from the TransportAPI
 
@@ -20,7 +26,7 @@ This project was built to demonstrate real-world backend and data engineering sk
 
     The scraper runs on a schedule and continuously builds a dataset that becomes more useful over time.
 
-🌍 Live Demo
+<h2>🌍 Live Demo</h2>
 
     Note: The deployed services may take up to 30 seconds to wake up on first visit due to hosting cold starts.<br>
     If it seems to be stuck after 20-30 seconds, refresh the page to allow it to work correctly.
@@ -31,7 +37,7 @@ This project was built to demonstrate real-world backend and data engineering sk
     Backend:
     https://train-delays-production.up.railway.app/
 
-✍️ Why this project exists
+<h2>✍️ Why this project exists</h2>
 
     This project was built to demonstrate:
 
@@ -45,9 +51,9 @@ This project was built to demonstrate real-world backend and data engineering sk
 
     Ability to design end-to-end systems independently
 
-🧱 Tech Stack
+<h2>🧱 Tech Stack</h2>
 
-Backend
+<h3>Backend</h3>
 
     Python
 
@@ -69,13 +75,13 @@ Backend
 
     Retry logic for production reliability (cold starts, sleeping DB, etc.)
 
-Frontend
+<h3>Frontend</h3>
 
     Simple dashboard UI (HTML/CSS/JS)
 
     Focused on clarity rather than heavy frameworks
 
-🧠 Key Engineering Considerations
+<h2>🧠 Key Engineering Considerations</h2>
 
     This project intentionally handles realistic production concerns, including:
 
@@ -93,7 +99,7 @@ Frontend
 
     It’s designed to behave more like a small real-world data pipeline than a toy scraper.
 
-🗂️ Project Structure (high level)
+<h2>🗂️ Project Structure (high level)</h2>
 
     services/ – scraper, API client, transformations
 
@@ -105,7 +111,7 @@ Frontend
 
     dashboard/ – simple frontend for visualisation
 
-🚧 Possible Improvements
+<h2>🚧 Possible Improvements</h2>
 
     Future enhancements (not yet implemented):
 
