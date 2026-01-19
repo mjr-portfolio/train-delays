@@ -12,30 +12,30 @@ This project was built to demonstrate real-world backend and data engineering sk
 
 <h2>📊 What the project does</h2>
 
-    Scrapes live train departure data from the TransportAPI
+Scrapes live train departure data from the TransportAPI
 
-    Normalises raw API responses into structured relational models
+Normalises raw API responses into structured relational models
 
-    Stores historical snapshots to track how delays change over time
+Stores historical snapshots to track how delays change over time
 
-    Computes aggregate metrics (e.g. average delay per scrape)
+Computes aggregate metrics (e.g. average delay per scrape)
 
-    Exposes data via a Flask API
+Exposes data via a Flask API
 
-    Displays trends in a lightweight frontend dashboard
+Displays trends in a lightweight frontend dashboard
 
-    The scraper runs on a schedule and continuously builds a growing historical dataset
+The scraper runs on a schedule and continuously builds a growing historical dataset
 
 <h2>🌍 Live Demo</h2>
 
-    Note: The deployed services may take up to 30 seconds to wake up on first visit due to hosting cold starts.<br>
-    If it seems to be stuck after 20-30 seconds, refresh the page to allow it to work correctly.
+Note: The deployed services may take up to 30 seconds to wake up on first visit due to hosting cold starts.<br>
+If it seems to be stuck after 20-30 seconds, refresh the page to allow it to work correctly.
 
-    Frontend:
-    https://train-delays.vercel.app/
+Frontend:
+https://train-delays.vercel.app/
 
-    Backend:
-    https://train-delays-production.up.railway.app/
+Backend:
+https://train-delays-production.up.railway.app/
 
 <h2>✍️ Why this project exists</h2>
 
@@ -124,7 +124,7 @@ This project was built to demonstrate real-world backend and data engineering sk
 
     The project is designed so the backend, scraper, and dashboard can all be run independently during development.
 
-<h2>🗂️ Project Structure (high level)</h2>
+<h2>🗂️ Project Structure</h2>
 
     train-delays/
     ├── backend/
