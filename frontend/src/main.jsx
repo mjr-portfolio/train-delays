@@ -3,13 +3,13 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import App from "./App";
-import Home from "./pages/Home";
+import Dashboard from "./pages/Dashboard";
 import ServiceDetail from "./pages/ServiceDetail";
 
 import "./index.css";
 
 const router = createBrowserRouter([
-  { path: "/", element: <Home /> },
+  { path: "/", element: <Dashboard /> },
   { path: "/service/:id", element: <ServiceDetail /> },
 ]);
 

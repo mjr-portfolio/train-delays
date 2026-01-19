@@ -6,7 +6,7 @@
 ![Vercel](https://img.shields.io/badge/Deploy-Vercel-black)
 ![Railway](https://img.shields.io/badge/Deploy-Railway-orange)
 
-A full-stack data project that tracks UK train delays over time by scraping live departure data, normalising it into a relational database, and visualising trends in a simple dashboard.
+A full-stack data project that tracks UK train delays over time by scraping live departure data, normalising it into a relational database, and visualising trends in a lightweight dashboard.
 
 This project was built to demonstrate real-world backend and data engineering skills: working with external APIs, building reliable pipelines, designing schemas, and deploying production services.
 
@@ -24,7 +24,7 @@ This project was built to demonstrate real-world backend and data engineering sk
 
     Displays trends in a lightweight frontend dashboard
 
-    The scraper runs on a schedule and continuously builds a dataset that becomes more useful over time.
+    The scraper runs on a schedule and continuously builds a growing historical dataset
 
 <h2>🌍 Live Demo</h2>
 
@@ -41,15 +41,15 @@ This project was built to demonstrate real-world backend and data engineering sk
 
     This project was built to demonstrate:
 
-    Backend engineering skills
+        Backend engineering skills applied to real-world data
 
-    Data modelling and pipeline thinking
+        Data modelling and pipeline design
 
-    Practical reliability concerns
+        Handling production issues like cold starts and transient failures
 
-    Comfort with production deployments
+        Comfort deploying and maintaining live services
 
-    Ability to design end-to-end systems independently
+        Ability to design and build an end-to-end system independently
 
 <h2>🧱 Tech Stack</h2>
 
@@ -63,21 +63,21 @@ This project was built to demonstrate real-world backend and data engineering sk
 
     Railway (API + scheduled scraper)
 
-    Data & Architecture
+    Architecture & Data Design
 
     Relational schema design
 
-    Data normalisation
+        Data normalisation
 
-    Upserts and snapshot history
+        Upserts and snapshot history
 
-    Logging and scrape summaries
+        Logging and scrape summaries
 
-    Retry logic for production reliability (cold starts, sleeping DB, etc.)
+        Retry logic for production reliability (cold starts, sleeping DB, etc.)
 
 <h3>Frontend</h3>
 
-    Simple dashboard UI (HTML/CSS/JS)
+    Minimal React UI, designed to support and showcase backend functionality
 
     Focused on clarity rather than heavy frameworks
 
@@ -85,35 +85,85 @@ This project was built to demonstrate real-world backend and data engineering sk
 
     This project intentionally handles realistic production concerns, including:
 
-    Cold starts from hosted databases
+        Cold starts from hosted databases
 
-    Retry logic for transient DB failures
+        Retry logic to handle transient DB failures (e.g. initial connection failures on wake)
 
-    Structured logging for observability
+        Defensive handling for sleeping databases during scheduled scrapes
 
-    Separation of raw data → normalised models
+        Structured logging for observability
 
-    Avoiding duplicated records via deterministic upserts
+        Separation of raw data → normalised models
 
-    Historical snapshots for trend analysis
+        Avoiding duplicated records via deterministic upserts
 
-    It’s designed to behave more like a small real-world data pipeline than a toy scraper.
+        Historical snapshots for trend analysis
+
+    These were driven by real issues encountered during deployment, rather than being added artificially.
+
+<h2>🛠️ Running Locally</h2>
+
+    Backend:
+
+        cd backend
+        python -m venv venv
+        pip install -r requirements.txt
+        flask run
+
+        Requires environment variables (see backend/.env.example)
+
+    Scraper:
+
+        python scraper.py
+
+    Frontend:
+
+        cd frontend
+        npm install
+        npm run dev
+
+    The project is designed so the backend, scraper, and dashboard can all be run independently during development.
 
 <h2>🗂️ Project Structure (high level)</h2>
 
-    services/ – scraper, API client, transformations
+    train-delays/
+    ├── backend/
+    │   ├── db/
+    │   ├── routes/
+    │   ├── services/
+    │   │   ├── __init__.py
+    │   │   ├── scraper.py
+    │   │   ├── transform.py
+    │   │   ├── transport_api.py
+    │   ├── app.py
+    │   ├── config.py
+    │   ├── requirements.txt
+    │   ├── seed_stations.py
+    │
+    └── docs/
+    │   ├── screenshots/
+    │
+    └── frontend/
+        ├── src/
+        │   ├── api/
+        │   ├── components/
+        │   ├── pages/
+        │   ├── app.jsx
+        │   ├── main.jsx
+        ├── vite.config.js
+        ├── vercel.json
 
-    db/ – models and database setup
+<h2>🖼 Screenshots</h2>
 
-    routes/ – Flask API endpoints
+<div align="center"><img src="./docs/screenshots/dashboard.webp" width="600"/></div>
+<p align="center"><i>Dashboard</i></p>
+<br>
 
-    scraper.py – scheduled job entrypoint
-
-    dashboard/ – simple frontend for visualisation
+<div align="center"><img src="./docs/screenshots/service_detail.webp" width="600"/></div>
+<p align="center"><i>Service Detail</i></p>
+<br>
 
 <h2>🚧 Possible Improvements</h2>
-
-    Future enhancements (not yet implemented):
 
     Support for more stations to widen the dataset
 
@@ -124,3 +174,19 @@ This project was built to demonstrate real-world backend and data engineering sk
     Public API documentation
 
     Containerised local setup
+
+    Increase scraping frequency to make trends more responsive and useful
+
+<h2>🧩 Lessons Learned</h2>
+
+    A few things this project reinforced:
+
+        Deployed systems behave differently from local ones (e.g. infrastructure quirks, transient failures)
+
+        Pipelines need defensive logic, not just happy-path code
+
+        Schema design matters early when collecting historical data
+
+        Logging becomes essential once something runs unattended
+
+    These are the kinds of problems I wanted to practise solving with this project.
