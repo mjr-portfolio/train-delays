@@ -39,17 +39,17 @@ https://train-delays-production.up.railway.app/
 
 <h2>✍️ Why this project exists</h2>
 
-    This project was built to demonstrate:
+This project was built to demonstrate:
 
-        Backend engineering skills applied to real-world data
+    Backend engineering skills applied to real-world data
 
-        Data modelling and pipeline design
+    Data modelling and pipeline design
 
-        Handling production issues like cold starts and transient failures
+    Handling production issues like cold starts and transient failures
 
-        Comfort deploying and maintaining live services
+    Comfort deploying and maintaining live services
 
-        Ability to design and build an end-to-end system independently
+    Ability to design and build an end-to-end system independently
 
 <h2>🧱 Tech Stack</h2>
 
@@ -83,46 +83,46 @@ https://train-delays-production.up.railway.app/
 
 <h2>🧠 Key Engineering Considerations</h2>
 
-    This project intentionally handles realistic production concerns, including:
+This project intentionally handles realistic production concerns, including:
 
-        Cold starts from hosted databases
+    Cold starts from hosted databases
 
-        Retry logic to handle transient DB failures (e.g. initial connection failures on wake)
+    Retry logic to handle transient DB failures (e.g. initial connection failures on wake)
 
-        Defensive handling for sleeping databases during scheduled scrapes
+    Defensive handling for sleeping databases during scheduled scrapes
 
-        Structured logging for observability
+    Structured logging for observability
 
-        Separation of raw data → normalised models
+    Separation of raw data → normalised models
 
-        Avoiding duplicated records via deterministic upserts
+    Avoiding duplicated records via deterministic upserts
 
-        Historical snapshots for trend analysis
+    Historical snapshots for trend analysis
 
-    These were driven by real issues encountered during deployment, rather than being added artificially.
+These were driven by real issues encountered during deployment, rather than being added artificially.
 
 <h2>🛠️ Running Locally</h2>
 
-    Backend:
+Backend:
 
-        cd backend
-        python -m venv venv
-        pip install -r requirements.txt
-        flask run
+    cd backend
+    python -m venv venv
+    pip install -r requirements.txt
+    flask run
 
-        Requires environment variables (see backend/.env.example)
+    Requires environment variables (see backend/.env.example)
 
-    Scraper:
+Scraper:
 
-        python scraper.py
+    python scraper.py
 
-    Frontend:
+Frontend:
 
-        cd frontend
-        npm install
-        npm run dev
+    cd frontend
+    npm install
+    npm run dev
 
-    The project is designed so the backend, scraper, and dashboard can all be run independently during development.
+The project is designed so the backend, scraper, and dashboard can all be run independently during development.
 
 <h2>🗂️ Project Structure</h2>
 
@@ -179,14 +179,14 @@ https://train-delays-production.up.railway.app/
 
 <h2>🧩 Lessons Learned</h2>
 
-    A few things this project reinforced:
+A few things this project reinforced:
 
-        Deployed systems behave differently from local ones (e.g. infrastructure quirks, transient failures)
+    Deployed systems behave differently from local ones (e.g. infrastructure quirks, transient failures)
 
-        Pipelines need defensive logic, not just happy-path code
+    Pipelines need defensive logic, not just happy-path code
 
-        Schema design matters early when collecting historical data
+    Schema design matters early when collecting historical data
 
-        Logging becomes essential once something runs unattended
+    Logging becomes essential once something runs unattended
 
-    These are the kinds of problems I wanted to practise solving with this project.
+These are the kinds of problems I wanted to practise solving with this project.
